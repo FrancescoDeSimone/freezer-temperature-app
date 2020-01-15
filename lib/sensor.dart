@@ -1,20 +1,18 @@
 class Sensor {
-  double _humidity;
-  double _temperature;
+  num _humidity;
+  num _temperature;
   String _doorState;
   DateTime _date;
 
- double get humidity => _humidity;
- double get temperature => _temperature;
- String get doorState => _doorState;
-DateTime get date => _date;
+  num get humidity => _humidity;
+  num get temperature => _temperature;
+  String get doorState => _doorState;
+  DateTime get date => _date;
 
-  Sensor(double humidity, double temperature,String doorState,DateTime date){
-  _humidity = humidity;
-  _temperature = temperature;
-  _doorState = doorState;
-  _date = date;
+  Sensor(num humidity, num temperature, String doorState, DateTime date) {
+    this._humidity = humidity;
+    this._temperature = temperature;
+    this._doorState = doorState;
+    this._date = date;
   }
-
-
 }
