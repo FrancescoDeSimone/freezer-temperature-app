@@ -50,110 +50,171 @@ class _FreezerPageState extends State<FreezerPage> {
                       case ConnectionState.active:
                         return TabBarView(children: [
                           Container(
-                              height: 100,
-                              child: Padding(
-                                  padding: EdgeInsets.all(8.0),
+                              child: Column(children: [
+                            Expanded(
+                                flex: 5,
+                                child: new charts.TimeSeriesChart(
+                                  [
+                                    new charts.Series<Sensor, DateTime>(
+                                      id: 'Humidity',
+                                      colorFn: (_, __) => charts
+                                          .MaterialPalette.blue.shadeDefault,
+                                      domainFn: (Sensor s, _) => s.date,
+                                      measureFn: (Sensor s, _) => s.humidity,
+                                      data: snapshot.data,
+                                    ),
+                                  ],
+                                  animate: false,
+                                  defaultRenderer:
+                                      new charts.LineRendererConfig(),
+                                  customSeriesRenderers: [
+                                    new charts.PointRendererConfig(
+                                        customRendererId: 'customPoint')
+                                  ],
+                                  dateTimeFactory:
+                                      const charts.LocalDateTimeFactory(),
+                                )),
+                            Expanded(
+                                flex: 5,
+                                child: Container(
                                   child: Column(children: [
                                     Expanded(
-                                      flex: 5,
-                                        child: new charts.TimeSeriesChart(
-                                      [
-                                        new charts.Series<Sensor, DateTime>(
-                                          id: 'Humidity',
-                                          colorFn: (_, __) => charts
-                                              .MaterialPalette
-                                              .blue
-                                              .shadeDefault,
-                                          domainFn: (Sensor s, _) => s.date,
-                                          measureFn: (Sensor s, _) =>
-                                              s.humidity,
-                                          data: snapshot.data,
-                                        ),
-                                      ],
-                                      animate: false,
-                                      defaultRenderer:
-                                          new charts.LineRendererConfig(),
-                                      customSeriesRenderers: [
-                                        new charts.PointRendererConfig(
-                                            customRendererId: 'customPoint')
-                                      ],
-                                      dateTimeFactory:
-                                          const charts.LocalDateTimeFactory(),
-                                    )),
-                                                                        Expanded(
-                                                                          flex: 5,
-child:
-                                    Container(
-                                        height: 50,
-                                        width: 100,
-                                        child: Flex(
-                                          mainAxisSize: MainAxisSize.max,
-                                          direction: Axis.horizontal,
-                                          children: [
-                                          Row(children: [
+                                        flex: 5,
+                                        child: Row(
+                                          children: <Widget>[
                                             Expanded(
-                                              child:
-                                              Text(
-                                              "Average",
-                                              textAlign: TextAlign.center,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                                                                        Expanded(                                              child:
-
-
-                                            Text(
-                                              "Current",
-                                              textAlign: TextAlign.center,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ))
-                                          ]),
-                                          Row(children: [
-                                            Text("Average"),
-                                            Text("Current")
-                                          ])
-                                        ]))
-                          )]))),
+                                                flex: 5,
+                                                child: Column(
+                                                  children: <Widget>[
+                                                    Text("Average",
+                                                        style: TextStyle(
+                                                            height: 3,
+                                                            fontSize: 30)),
+                                                    Text(((snapshot.data
+                                                                .map((sensor) =>
+                                                                    sensor
+                                                                        .humidity)
+                                                                .reduce((value,
+                                                                        element) =>
+                                                                    value +
+                                                                    element)) /
+                                                            snapshot
+                                                                .data.length)
+                                                        .toStringAsFixed(1))
+                                                  ],
+                                                )),
+                                            Expanded(
+                                                flex: 5,
+                                                child: Column(
+                                                  children: <Widget>[
+                                                    Text("Current",
+                                                        style: TextStyle(
+                                                            height: 3,
+                                                            fontSize: 30)),
+                                                    Text(
+                                                        '${snapshot.data.last.humidity}')
+                                                  ],
+                                                ))
+                                          ],
+                                        )),
+                                    Expanded(
+                                        flex: 5,
+                                        child: Center(
+                                            child: Column(children: [
+                                          Text(
+                                            "Door status",
+                                            style: TextStyle(
+                                                height: 3, fontSize: 30),
+                                          ),
+                                          Text(
+                                              '${snapshot.data.last.doorState}'),
+                                        ])))
+                                  ]),
+                                ))
+                          ])),
                           Container(
-                              child: Column(
-                            children: <Widget>[
-                              new charts.TimeSeriesChart(
-                                [
-                                  new charts.Series<Sensor, DateTime>(
-                                    id: 'Temperature',
-                                    colorFn: (_, __) =>
-                                        charts.MaterialPalette.red.shadeDefault,
-                                    domainFn: (Sensor s, _) => s.date,
-                                    measureFn: (Sensor s, _) => s.temperature,
-                                    data: snapshot.data,
-                                  ),
-                                ],
-                                animate: false,
-                                defaultRenderer:
-                                    new charts.LineRendererConfig(),
-                                customSeriesRenderers: [
-                                  new charts.PointRendererConfig(
-                                      customRendererId: 'customPoint')
-                                ],
-                                dateTimeFactory:
-                                    const charts.LocalDateTimeFactory(),
-                              ),
-                              Container(
+                              child: Column(children: [
+                            Expanded(
+                                flex: 5,
+                                child: new charts.TimeSeriesChart(
+                                  [
+                                    new charts.Series<Sensor, DateTime>(
+                                      id: 'Temperature',
+                                      colorFn: (_, __) => charts
+                                          .MaterialPalette.blue.shadeDefault,
+                                      domainFn: (Sensor s, _) => s.date,
+                                      measureFn: (Sensor s, _) => s.temperature,
+                                      data: snapshot.data,
+                                    ),
+                                  ],
+                                  animate: false,
+                                  defaultRenderer:
+                                      new charts.LineRendererConfig(),
+                                  customSeriesRenderers: [
+                                    new charts.PointRendererConfig(
+                                        customRendererId: 'customPoint')
+                                  ],
+                                  dateTimeFactory:
+                                      const charts.LocalDateTimeFactory(),
+                                )),
+                            Expanded(
+                                flex: 5,
+                                child: Container(
                                   child: Column(children: [
-                                Row(children: [
-                                  Text("Average"),
-                                  Text("Current")
-                                ]),
-                                Row(children: [
-                                  Text("Average"),
-                                  Text("Current")
-                                ])
-                              ]))
-                            ],
-                          ))
+                                    Expanded(
+                                        flex: 5,
+                                        child: Row(
+                                          children: <Widget>[
+                                            Expanded(
+                                                flex: 5,
+                                                child: Column(
+                                                  children: <Widget>[
+                                                    Text("Average",
+                                                        style: TextStyle(
+                                                            height: 3,
+                                                            fontSize: 30)),
+                                                    Text(((snapshot.data
+                                                                .map((sensor) =>
+                                                                    sensor
+                                                                        .temperature)
+                                                                .reduce((value,
+                                                                        element) =>
+                                                                    value +
+                                                                    element)) /
+                                                            snapshot
+                                                                .data.length)
+                                                        .toStringAsFixed(1))
+                                                  ],
+                                                )),
+                                            Expanded(
+                                                flex: 5,
+                                                child: Column(
+                                                  children: <Widget>[
+                                                    Text("Current",
+                                                        style: TextStyle(
+                                                            height: 3,
+                                                            fontSize: 30)),
+                                                    Text(
+                                                        '${snapshot.data.last.temperature}')
+                                                  ],
+                                                ))
+                                          ],
+                                        )),
+                                    Expanded(
+                                        flex: 5,
+                                        child: Center(
+                                            child: Column(children: [
+                                          Text(
+                                            "Door status",
+                                            style: TextStyle(
+                                                height: 3, fontSize: 30),
+                                          ),
+                                          Text(
+                                              '${snapshot.data.last.doorState}'),
+                                        ])))
+                                  ]),
+                                ))
+                          ]))
                         ]);
                       case ConnectionState.done:
                         return Text('bye');
