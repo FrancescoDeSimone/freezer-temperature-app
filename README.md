@@ -132,6 +132,8 @@ is transpiled for all the supported platform.
 The application is currently tested on Android devices. The application is divided in two
 tabs, one for the humidity data and one for the temperature data:
 
+![Schematics](img/app.png)
+
 The history of the data is shown in a chart, then we could see the average and the
 last measurement. The door status is visible in both the tabs. The data are updated in
 real time with Cosmos DB server.
